@@ -1,10 +1,5 @@
-from matplotlib import pyplot
-from matplotlib import style
+import pandas as pd
 
-style.use('ggplot')
+df = pd.read_csv("log.csv", parse_dates=[0])
 
-
-
-pyplot.title('weather tracking')
-pyplot.ylabel('')
-pyplot.xlabel('')
+print(df)
