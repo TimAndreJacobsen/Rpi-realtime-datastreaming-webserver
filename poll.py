@@ -2,7 +2,7 @@ import pigpio
 import csv
 import datetime
 from time import sleep
-from pigpio_DHT22 import DHT22
+import DHT22
 
 # this connects to the pigpio daemon - needs to be started in CLI first with "sudo pigpiod"
 pi = pigpio.pi()
