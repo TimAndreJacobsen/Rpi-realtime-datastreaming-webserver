@@ -19,9 +19,8 @@ def write(humidity, temperature):
     now = time.strftime("%Y-%m-%d %H:%M:%S")
     writer.writerow([now, str(humidity), int(temperature)])
 
-with open('log.csv', 'w') as file:
+with open('log.csv', 'a') as file:
     writer = csv.writer(file, lineterminator='\n')
-    writer.writerow(['time', 'humidity', 'temperature'])
     poll()
     sleep(5) # sleep in seconds - DHT22 is limited to 1 poll per 2seconds
     poll()
