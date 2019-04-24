@@ -22,8 +22,6 @@ def write(humidity, temperature):
 with open('log.csv', 'a') as file:
     writer = csv.writer(file, lineterminator='\n')
     poll()
-    sleep(5) # sleep in seconds - DHT22 is limited to 1 poll per 2seconds
-    poll()
 
 # cleaning up
 s.cancel()
