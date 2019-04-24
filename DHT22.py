@@ -3,7 +3,6 @@
 # 2014-07-11 DHT22.py
 
 import time
-import atexit
 
 import pigpio
 
@@ -61,8 +60,7 @@ class sensor:
 
       self.cb = None
 
-      atexit.register(self.cancel)
-
+      
       self.bad_CS = 0 # Bad checksum count.
       self.bad_SM = 0 # Short message count.
       self.bad_MM = 0 # Missing message count.
