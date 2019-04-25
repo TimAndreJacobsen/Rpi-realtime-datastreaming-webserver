@@ -7,4 +7,8 @@ formatters=None, float_format=None, sparsify=None, index_names=True, justify=Non
 classes=None, escape=True, max_rows=None, max_cols=None, show_dimensions=False, notebook=False, decimal='.', 
 border=None, table_id=None)
 
-print(html)
+df_json = df.to_json(path_or_buf=None, orient=None, date_format='iso', double_precision=10, 
+force_ascii=True, date_unit='s', default_handler=None, lines=False, compression='infer', index=True)
+
+print(df_json)
+
