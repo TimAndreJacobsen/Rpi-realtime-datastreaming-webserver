@@ -1,7 +1,13 @@
 google.charts.load('current', {packages: ['corechart', 'line']});
 google.charts.setOnLoadCallback(drawTrendlines);
 
-const LOG = ''
+const logPath = ''
+
+const day1 = new Date(2019, 04, 24, 17, 00, 28);
+const day2 = new Date(2019, 05, 24, 17, 00, 28);
+const day3 = new Date(2019, 04, 24, 23, 00, 28);
+
+
 
 // prepare data ie parse .csv
 
@@ -16,14 +22,14 @@ parseCSV()
 
 function drawTrendlines() {
       var data = new google.visualization.DataTable();
-      data.addColumn('number', 'X');
+      data.addColumn('datetime', 'X');
       data.addColumn('number', 'Dogs');
       data.addColumn('number', 'Cats');
 
       data.addRows([
-        [0, 0, 0],
-            [1, 10, 5],
-               [2, 23, 15]
+        [day1, 0, 0],
+            [day2, 10, 5],
+               [day3, 23, 15]
       ]);
 
       var options = {
@@ -35,7 +41,6 @@ function drawTrendlines() {
         },
         colors: ['#AB0D06', '#007329'],
         trendlines: {
-          0: {type: 'exponential', color: '#333', opacity: 1},
           1: {type: 'linear', color: '#111', opacity: .3}
         }
       };
