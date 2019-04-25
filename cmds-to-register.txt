@@ -1,3 +1,7 @@
-run the polling function every 15 minutes all days, all months
 
+#scheduling jobs to run with crontabs:
+#run the polling function every 15 minutes
 */15 * * * * python /home/pi/poll.py
+
+#Enable pigpio daemon to auto-start on boot:/
+sudo systemctl enable pigpiod
