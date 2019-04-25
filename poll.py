@@ -17,7 +17,7 @@ def poll():
 
 def write(humidity, temperature):
     now = time.strftime("%Y-%m-%d %H:%M:%S")
-    writer.writerow([now, str(humidity), int(temperature)])
+    writer.writerow([now, int(humidity), int(temperature)])
 
 with open('log.csv', 'a') as file:
     writer = csv.writer(file, lineterminator='\n')
