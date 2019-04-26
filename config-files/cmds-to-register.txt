@@ -13,13 +13,13 @@ sudo apt-get install python-dev
 cd ~
 mkdir python-source
 cd python-source/
-wget https://www.python.org/ftp/python/3.6.4/Python-3.6.4.tgz
-tar zxvf Python-3.6.4.tgz
-cd Python-3.6.4/
-./configure --prefix=/usr/local/opt/python-3.6.4
+wget https://www.python.org/ftp/python/3.7.3/Python-3.7.3.tgz
+tar zxvf Python-3.7.3.tgz
+cd Python-3.7.3/
+./configure --prefix=/usr/local/opt/python-3.7.3
 make
 sudo make install
-/usr/local/opt/python-3.6.4/bin/python3.6 --version ## expected output "Python 3.6.4"
+/usr/local/opt/python-3.7.3/bin/python-3.7.3 --version ## expected output "Python 3.7.3"
 
 
 
