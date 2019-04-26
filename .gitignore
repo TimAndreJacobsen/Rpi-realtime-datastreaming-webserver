@@ -1,5 +1,10 @@
 # zip files and other archives
-zip
+zip/
 
 # backup images of boot/OS
-backup
+backup/
+
+# python env files and libraries
+www/sensor_app/bin/
+www/sensor_app/include/
+www/sensor_app/lib/
