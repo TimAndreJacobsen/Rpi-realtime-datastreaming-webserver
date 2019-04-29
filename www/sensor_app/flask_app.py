@@ -6,7 +6,7 @@ app.debug = True
 
 @app.route("/")
 def hello_world():
-    return "Hello World! Flask here"
+    return render_template("hello.html", message="hello world, flask with render here!")
 
 @app.route("/data")
 def show_data():
