@@ -7,7 +7,7 @@ app.debug = True
 
 @app.route("/")
 def index():
-    return render_template("hello.html", message="hello world, flask with render here!")
+    return render_template("index.html", message="hello world, flask with render here!")
 
 @app.route("/data")
 def show_data():
