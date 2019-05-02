@@ -8,7 +8,7 @@ app.debug = True
 
 @app.route("/")
 def index():
-    return render_template("index.html", message="hello world, flask with render here!")
+    return status()
 
 @app.route("/data")
 def show_data():
@@ -29,7 +29,7 @@ def status():
     humi_rows = cursor.fetchall()
 
     connection.close()
-    return render_template("room_data.html", temp=temp_rows, humi=humi_rows)
+    return render_template("room_status.html", temp=temp_rows, hum=humi_rows)
 
 
 if __name__ == "__main__":
