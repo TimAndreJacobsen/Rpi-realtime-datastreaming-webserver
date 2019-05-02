@@ -28,9 +28,9 @@ def status():
     connection = sqlite3.connect('/var/www/sensor_app/sensor_app.db')
     cursor = connection.cursor()
 
-    cursor.execute('SELECT * FROM temperatures')
+    cursor.execute('SELECT * FROM temperatures WHERE rDatetime BETWEEN ? AND ?', (from_datetime, to_datetime))
     temp_rows = cursor.fetchall()
-    cursor.execute('SELECT * FROM humidities')
+    cursor.execute('SELECT * FROM humidities WHERE rDatetime BETWEEN ? AND ?', (from_datetime, to_datetime))
     humi_rows = cursor.fetchall()
 
     connection.close()
