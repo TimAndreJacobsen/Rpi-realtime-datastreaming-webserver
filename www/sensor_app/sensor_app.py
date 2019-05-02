@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template
 import sys
 import Adafruit_DHT
+import sqlite3
 
 app = Flask(__name__)
 app.debug = True
@@ -16,6 +17,18 @@ def show_data():
         return render_template("room_data.html", temp=temp, humidity=humidity)
     else:
         return render_template("sensor_error.html", msg="temp/humid is None")
+
+@app.route("/status")
+def status():
+    connection = sqlite3.connect('/var/www/sensor_app/sensor_app.db')
+    cursor = connection.cursor()
+
+    cursor.execute('SELECT * FROM temperatures')
+    rows = cursor.fetchall()
+
+    connection.close()
+    return(rows)
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8080)
