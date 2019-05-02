@@ -24,10 +24,12 @@ def status():
     cursor = connection.cursor()
 
     cursor.execute('SELECT * FROM temperatures')
-    rows = cursor.fetchall()
+    temp_rows = cursor.fetchall()
+    cursor.execute('SELECT * FROM humidities')
+    humi_rows = cursor.fetchall()
 
     connection.close()
-    return(rows)
+    return render_template("room_data.html", temp=temp_rows, humi=humi_rows)
 
 
 if __name__ == "__main__":
