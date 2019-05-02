@@ -2,6 +2,8 @@ from flask import Flask, request, render_template
 import sys
 import Adafruit_DHT
 import sqlite3
+import time
+import datetime
 
 app = Flask(__name__)
 app.debug = True
@@ -18,8 +20,11 @@ def show_data():
     else:
         return render_template("sensor_error.html", msg="temp/humid is None")
 
-@app.route("/status")
+@app.route("/status", methods=['GET'])
 def status():
+    from_datetime = request.args.get('from',time.strftime("%Y-%m-%d %H:%M"))
+    to_datetime = request.args.get('to', time.strftime("%Y-%m-%d %H:%M"))
+
     connection = sqlite3.connect('/var/www/sensor_app/sensor_app.db')
     cursor = connection.cursor()
 
