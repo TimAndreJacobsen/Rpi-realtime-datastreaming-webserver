@@ -32,7 +32,7 @@ below commands are left for posterity, but are not in use anymore.
 ======================================================================
 #scheduling jobs to run with crontabs:
 #run the polling function every 15 minutes
-*/15 * * * * python /var/www/sensor_app/log_DHT22.py
+*/15 * * * * /var/www/sensor_app/bin/python /var/www/sensor_app/log_DHT22.py
 
 
 #Enable pigpio daemon to auto-start on boot:/
