@@ -9,8 +9,8 @@ def log_values(sensor_id, temperature, humidity):
     connection = sqlite3.connect('/var/www/sensor_app/sensor_app.db')
     cursor = connection.cursor()
 
-    cursor.execute("""INSERT INTO temperatures values(datetime(CURRENT_TIMESTAMP, 'localtime'), (?), (?))""")
-    cursor.execute("""INSERT INTO humidities values(datetime(CURRENT_TIMESTAMP, 'localtime'), (?), (?))""")
+    cursor.execute("""INSERT INTO temperatures values(datetime(CURRENT_TIMESTAMP, 'localtime'), (?), (?))""", (sensor_id, temperature))
+    cursor.execute("""INSERT INTO humidities values(datetime(CURRENT_TIMESTAMP, 'localtime'), (?), (?))""", (sensor_id, humidity))
     
     connection.commit()
     connection.close()
