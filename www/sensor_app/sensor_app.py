@@ -26,6 +26,15 @@ def status():
     temperatures, humidities = get_records(from_datetime, to_datetime)
     return render_template("room_status.html", temp=temperatures, hum=humidities)
 
+def get_records(from_datetime, to_datetime):
+    conn, curs = db_connect()
+    curs.execute('SELECT * FROM temperatures WHERE rDatetime BETWEEN ? AND ?', (from_datetime, to_datetime))
+    temp_rows = curs.fetchall()
+    curs.execute('SELECT * FROM humidities WHERE rDatetime BETWEEN ? AND ?', (from_datetime, to_datetime))
+    humi_rows = curs.fetchall()
+    db_disconnect(conn)
+    return temp_rows, humi_rows
+
     if not validate_datetime(from_datetime):
     if not validate_datetime(to_datetime):
 
