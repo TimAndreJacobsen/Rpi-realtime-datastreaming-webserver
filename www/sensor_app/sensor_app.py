@@ -12,8 +12,8 @@ app.debug = True
 def index():
     return status()
 
-@app.route("/data")
-def show_data():
+@app.route("/current")
+def show_realtime_status():
     humidity, temp = Adafruit_DHT.read_retry(Adafruit_DHT.AM2302, 4)
     if humidity is not None and temp is not None:
         return render_template("room_data.html", temp=temp, humidity=humidity)
