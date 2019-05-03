@@ -106,44 +106,17 @@
 
     </div>
 
-<!-- Google Charts JS start -->
-<script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['corechart']}]}"></script>
 
-<script>
-  google.load('visualization', '1', {packages: ['corechart']});
-  google.setOnLoadCallback(drawChart);
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
   function drawChart() {
-
     var data = new google.visualization.DataTable();
-    data.addColumn('datetime', 'Time');  
-    data.addColumn('number', 'Temperature');      
     data.addRows([
 
-        {% for row in temp %} 
-          [new Date({{row[0][0:4]}},{{row[0][5:7]}},{{row[0][8:10]}},{{row[0][11:13]}},{{row[0][14:16]}}),
-              {{'%0.2f'|format(row[2])}}],
-        {% endfor %}
-      ]);
-
     var options = {
-      width: 600,
-      height: 563,
-      hAxis: {
-        title: "Date",
-        gridlines: { count: {{temp_items}}, color: '#CCC' },
-        format: 'dd-MMM-yyyy HH:mm' },
-      vAxis: {
-        title: 'Degrees'
       },
-      title: 'Temperature',
-      curveType: 'function'  //Makes line curved
     };
 
-    var chart = new google.visualization.LineChart(document.getElementById('chart_temps'));
-
-    chart.draw(data, options);
   }
 </script>
 
@@ -219,9 +192,30 @@
         chart.draw(data, google.charts.Line.convertOptions(options));
       }
   </script>
+  function drawTempChart() {
+    var data = new google.visualization.DataTable();
+    data.addColumn('datetime', 'Time');
+    data.addColumn('number', 'Temperature');
+    data.addRows([
+      {% for row in both %}
+        [new Date({{row[0][0:4]}},{{row[0][5:7]}},{{row[0][8:10]}},{{row[0][11:13]}},{{row[0][14:16]}}),
+        {{'%0.2f'|format(row[1])}}],
+      {% endfor %}
+    ]);
 
-  
+    var options = {
+      chart: {
+        title: 'Temperatures',
+        subtitle: 'in degrees'
+      },
+      colors: ['red'],
+      width: 900,
+      height: 500
+    };
 
+    var chart = new google.charts.Line(document.getElementById('chart_temps'));
+    chart.draw(data, google.charts.Line.convertOptions(options));
+  }
 
 
 
