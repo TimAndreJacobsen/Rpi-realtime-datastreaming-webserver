@@ -5,3 +5,4 @@ for(radio in radios) {
         range_select_form.submit();
     }
 }
+// TODO make radio button appear clicked after reload, to indicate to user what data range is being display
