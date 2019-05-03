@@ -22,25 +22,14 @@ def show_realtime_status():
 
 @app.route("/status", methods=['GET'])
 def status():
-    from_datetime = request.args.get('from',time.strftime("%Y-%m-%d 00:00"))
-    to_datetime = request.args.get('to', time.strftime("%Y-%m-%d %H:%M"))
+    from_datetime, to_datetime = get_datetime_args()
+    temperatures, humidities = get_records(from_datetime, to_datetime)
+    return render_template("room_status.html", temp=temperatures, hum=humidities)
 
     if not validate_datetime(from_datetime):
-        from_datetime = time.strftime("%Y-%m-%d 00:00")
     if not validate_datetime(to_datetime):
-        to_datetime = time.strftime("%Y-%m-%d %H:%M")
 
-
-    cursor.execute('SELECT * FROM temperatures WHERE rDatetime BETWEEN ? AND ?', (from_datetime, to_datetime))
-    temp_rows = cursor.fetchall()
-    cursor.execute('SELECT * FROM humidities WHERE rDatetime BETWEEN ? AND ?', (from_datetime, to_datetime))
-    humi_rows = cursor.fetchall()
-
-    return render_template("room_status.html", temp=temp_rows, hum=humi_rows)
-
-def validate_datetime(query_time):
     try:
-        datetime.datetime.strptime(query_time, "%Y-%m-%d %H:%M")
         return True
     except ValueError:
         return False
