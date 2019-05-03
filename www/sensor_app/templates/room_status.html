@@ -49,6 +49,7 @@
 
     <div class="container">
       <div class="row">
+
         <div class="one-third column" style="margin-top: 5%">
           <strong>Showing all records</strong>
 
@@ -90,7 +91,7 @@
 
         </div>
 
-      <!-- Google Charts Code start -->
+      <!-- Google Charts -->
       <div class="two-thirds column" style="margin-top: 5%">
         <div class="row">                  
           <div class="row">
@@ -102,67 +103,41 @@
           </div>
         </div>     
       </div>
-      <!-- Google Charts Code end -->
 
     </div>
 
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+  google.charts.load('current', {'packages':['line']});
 
   function drawChart() {
     var data = new google.visualization.DataTable();
+    data.addColumn('datetime', 'Time');
+    data.addColumn('number', 'Temperature');
+    data.addColumn('number', 'Humidity');
     data.addRows([
+      {% for row in both %}
+        [new Date({{row[0][0:4]}},{{row[0][5:7]}},{{row[0][8:10]}},{{row[0][11:13]}},{{row[0][14:16]}}),
+        {{'%0.2f'|format(row[1])}},
+        {{'%0.2f'|format(row[2])}}],
+      {% endfor %}
+    ]);
 
     var options = {
+      chart: {
+        title: 'Temperatures and Humidities',
+        subtitle: 'Temperature in degrees and humidity in percent'
       },
+      colors: ['red', 'green'],
+      width: 900,
+      height: 500
     };
 
+    var chart = new google.charts.Line(document.getElementById('chart_both'));
+    chart.draw(data, google.charts.Line.convertOptions(options));
   }
-</script>
 
-
-<script>
-  google.load('visualization', '1', {packages: ['corechart']});
-    google.setOnLoadCallback(drawChart);
-    function drawChart() {
-      var data = new google.visualization.DataTable();
-      data.addColumn('datetime', 'Time');  
-      data.addColumn('number', 'Humidity', 'Temperature');      
-      data.addRows([
-
-<script type="text/javascript">
-  google.charts.load('current', {'packages':['line']});
-        google.charts.setOnLoadCallback(drawChart);
-
-      function drawChart() {
-
-        var data = new google.visualization.DataTable();
-        data.addColumn('datetime', 'Time');
-        data.addColumn('number', 'Temperature');
-        data.addColumn('number', 'Humidity');
-
-        data.addRows([
-          {% for row in both %}
-            [new Date({{row[0][0:4]}},{{row[0][5:7]}},{{row[0][8:10]}},{{row[0][11:13]}},{{row[0][14:16]}}),
-            {{'%0.2f'|format(row[1])}},
-            {{'%0.2f'|format(row[2])}}],
-          {% endfor %}
-        ]);
-
-        var options = {
-          chart: {
-            title: 'Temperatures and Humidities',
-            subtitle: 'temp in degrees, humid in %'
-          },
-          width: 900,
-          height: 500
-        };
-
-        var chart = new google.charts.Line(document.getElementById('chart_both'));
-
-        chart.draw(data, google.charts.Line.convertOptions(options));
-      }
-  </script>
   function drawTempChart() {
     var data = new google.visualization.DataTable();
     data.addColumn('datetime', 'Time');
