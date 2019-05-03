@@ -42,14 +42,11 @@ def get_datetime_args():
     return start_datetime, end_datetime
     
 def validate_datetime_interval(from_datetime, to_datetime):
-    # reassigning to not mutate original values
-    start_datetime = from_datetime 
-    end_datetime = to_datetime
     if not validate_datetime(from_datetime):
-        start_datetime = time.strftime("%Y-%m-%d 00:00")
+        from_datetime = time.strftime("%Y-%m-%d 00:00")
     if not validate_datetime(to_datetime):
-        end_datetime = time.strftime("%Y-%m-%d %H:%M")
-    return start_datetime, end_datetime
+        to_datetime = time.strftime("%Y-%m-%d %H:%M")
+    return from_datetime, to_datetime
 
 def validate_datetime(datetime_obj):
     try:
