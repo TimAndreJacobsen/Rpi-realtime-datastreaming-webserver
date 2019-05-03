@@ -25,6 +25,11 @@ def status():
     from_datetime = request.args.get('from',time.strftime("%Y-%m-%d %H:%M"))
     to_datetime = request.args.get('to', time.strftime("%Y-%m-%d %H:%M"))
 
+    if not validate_datetime(from_datetime):
+        from_datetime = time.strftime('%Y-%m-%d 00:00')
+    if not validate_datetime(to_datetime):
+        to_datetime = time.strftime('%Y-%m-%d %H:%M')
+
     connection = sqlite3.connect('/var/www/sensor_app/sensor_app.db')
     cursor = connection.cursor()
 
@@ -35,6 +40,13 @@ def status():
 
     connection.close()
     return render_template("room_status.html", temp=temp_rows, hum=humi_rows)
+
+def validate_datetime(datetime):
+    try:
+        datetime.datetime.strptime(datetime, '%Y-%m-%d %H:%M')
+        return True
+    except ValueError:
+        return False
 
 
 if __name__ == "__main__":
