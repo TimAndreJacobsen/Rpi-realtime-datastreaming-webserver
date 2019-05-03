@@ -30,15 +30,12 @@ def status():
     if not validate_datetime(to_datetime):
         to_datetime = time.strftime("%Y-%m-%d %H:%M")
 
-    connection = sqlite3.connect('/var/www/sensor_app/sensor_app.db')
-    cursor = connection.cursor()
 
     cursor.execute('SELECT * FROM temperatures WHERE rDatetime BETWEEN ? AND ?', (from_datetime, to_datetime))
     temp_rows = cursor.fetchall()
     cursor.execute('SELECT * FROM humidities WHERE rDatetime BETWEEN ? AND ?', (from_datetime, to_datetime))
     humi_rows = cursor.fetchall()
 
-    connection.close()
     return render_template("room_status.html", temp=temp_rows, hum=humi_rows)
 
 def validate_datetime(query_time):
@@ -48,6 +45,13 @@ def validate_datetime(query_time):
     except ValueError:
         return False
 
+def db_connect():
+    connection = sqlite3.connect('/var/www/sensor_app/sensor_app.db')
+    cursor = connection.cursor()
+    return connection, cursor
+
+def db_disconnect(conn):
+    conn.close()
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8080)
