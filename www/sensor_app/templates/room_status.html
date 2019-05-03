@@ -186,8 +186,8 @@
       data.addRows([
           {% for row in both %}
             [new Date({{row[0][0:4]}},{{row[0][5:7]}},{{row[0][8:10]}},{{row[0][11:13]}},{{row[0][14:16]}}),
+            {{'%0.2f'|format(row[1])}}],
             {{'%0.2f'|format(row[2])}}],
-            {{'%0.2f'|format(row[3])}}],
           {% endfor %}
         ]);
 
