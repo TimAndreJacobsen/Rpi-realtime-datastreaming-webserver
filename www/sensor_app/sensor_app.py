@@ -22,13 +22,13 @@ def show_realtime_status():
 
 @app.route("/status", methods=['GET'])
 def status():
-    from_datetime = request.args.get('from',time.strftime("%Y-%m-%d %H:%M"))
+    from_datetime = request.args.get('from',time.strftime("%Y-%m-%d 00:00"))
     to_datetime = request.args.get('to', time.strftime("%Y-%m-%d %H:%M"))
 
     if not validate_datetime(from_datetime):
-        from_datetime = time.strftime('%Y-%m-%d 00:00')
+        from_datetime = time.strftime("%Y-%m-%d 00:00")
     if not validate_datetime(to_datetime):
-        to_datetime = time.strftime('%Y-%m-%d %H:%M')
+        to_datetime = time.strftime("%Y-%m-%d %H:%M")
 
     connection = sqlite3.connect('/var/www/sensor_app/sensor_app.db')
     cursor = connection.cursor()
