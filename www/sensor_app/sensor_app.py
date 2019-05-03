@@ -22,7 +22,7 @@ def show_realtime_status():
 
 @app.route("/status", methods=['GET'])
 def status():
-    from_datetime, to_datetime = get_datetime_args()
+    from_datetime, to_datetime = get_args()
     temperatures, humidities = get_records(from_datetime, to_datetime)
     return render_template("room_status.html", temp=temperatures, hum=humidities)
 
@@ -35,11 +35,27 @@ def get_records(from_datetime, to_datetime):
     db_disconnect(conn)
     return temp_rows, humi_rows
 
-def get_datetime_args():
-    start_datetime_obj = request.args.get('from',time.strftime("%Y-%m-%d 00:00"))
+def get_args():
+    # get args from url
+    start_datetime_obj = request.args.get('from', time.strftime("%Y-%m-%d 00:00"))
     end_datetime_obj = request.args.get('to', time.strftime("%Y-%m-%d %H:%M"))
+    radio_hours_form = request.args.get('range_h')
+
     start_datetime, end_datetime = validate_datetime_interval(start_datetime_obj, end_datetime_obj)
+
+    range_hours_int = "nan"
+    try:
+        range_hours_int = int(radio_hours_form)
+    except:
+        print("range_hours_form not a number")
+    if isinstance(range_hours_int, int):
+        time_now, time_to = datetime.datetime.now(), datetime.datetime.now()
+        time_from = time_now - datetime.timedelta(hours=range_hours_int)
+        start_datetime = time_from.strftime("%Y-%m-%d %H:%M")
+        end_datetime = time_to.strftime("%Y-%m-%d %H:%M")
+
     return start_datetime, end_datetime
+
     
 def validate_datetime_interval(from_datetime, to_datetime):
     if not validate_datetime(from_datetime):
