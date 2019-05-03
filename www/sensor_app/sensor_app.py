@@ -41,9 +41,9 @@ def status():
     connection.close()
     return render_template("room_status.html", temp=temp_rows, hum=humi_rows)
 
-def validate_datetime(datetime):
+def validate_datetime(query_time):
     try:
-        datetime.datetime.strptime(datetime, '%Y-%m-%d %H:%M')
+        datetime.datetime.strptime(query_time, "%Y-%m-%d %H:%M")
         return True
     except ValueError:
         return False
