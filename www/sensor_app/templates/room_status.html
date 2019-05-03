@@ -95,6 +95,7 @@
         <div class="row">                  
           <div class="row">
             <div class="three columns">
+              <div id="chart_both"></div>
               <div id="chart_temps"></div>
               <div id="chart_humid"></div>
             </div>
@@ -171,6 +172,40 @@
         curveType: 'function'  //Makes line curved
       };
       var chart = new google.visualization.LineChart(document.getElementById('chart_humid'));
+      chart.draw(data, options);
+    }
+</script>
+
+<script>
+  google.load('visualization', '1', {packages: ['corechart']});
+    google.setOnLoadCallback(drawChart);
+    function drawChart() {
+      var data = new google.visualization.DataTable();
+      data.addColumn('datetime', 'Time');  
+      data.addColumn('number', 'Humidity', 'Temperature');      
+      data.addRows([
+          {% for row in both %}
+            [new Date({{row[0][0:4]}},{{row[0][5:7]}},{{row[0][8:10]}},{{row[0][11:13]}},{{row[0][14:16]}}),
+            {{'%0.2f'|format(row[2])}}],
+            {{'%0.2f'|format(row[3])}}],
+          {% endfor %}
+        ]);
+
+      var options = {
+        width: 600,
+        height: 563,
+        hAxis: {
+          title: "Date",
+          gridlines: { count: {{hum_items}}, color: '#CCC' },
+          format: 'dd-MMM-yyyy HH:mm'},
+        vAxis: {
+          title: 'Percent'
+        },
+        title: 'Humidity & Temperature',
+        curveType: 'function'  //Makes line curved
+      };
+
+      var chart = new google.visualization.LineChart(document.getElementById('chart_both'));
       chart.draw(data, options);
     }
 </script>
