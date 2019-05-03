@@ -32,7 +32,7 @@ def get_records(from_datetime, to_datetime):
     temp_rows = curs.fetchall()
     curs.execute('SELECT * FROM humidities WHERE rDatetime BETWEEN ? AND ?', (from_datetime, to_datetime))
     humi_rows = curs.fetchall()
-    curs.execute('SELECT temperatures.rDatetime, temperatures.temp, humidities.humidity FROM temperatures WHERE rDatetime BETWEEN ? AND ? JOIN humidities ON temperatures.rDatetime = humidities.rDatetime', (from_datetime, to_datetime))
+    curs.execute('SELECT temperatures.rDatetime, temperatures.temp, humidities.humidity FROM temperatures JOIN humidities ON temperatures.rDatetime = humidities.rDatetime WHERE temperatures.rDatetime BETWEEN ? AND ?', (from_datetime, to_datetime))
     both_rows = curs.fetchall()
 
     db_disconnect(conn)
