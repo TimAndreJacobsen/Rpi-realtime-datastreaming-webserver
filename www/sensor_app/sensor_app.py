@@ -35,6 +35,12 @@ def get_records(from_datetime, to_datetime):
     db_disconnect(conn)
     return temp_rows, humi_rows
 
+def get_datetime_args():
+    start_datetime_obj = request.args.get('from',time.strftime("%Y-%m-%d 00:00"))
+    end_datetime_obj = request.args.get('to', time.strftime("%Y-%m-%d %H:%M"))
+    start_datetime, end_datetime = validate_datetime_interval(start_datetime_obj, end_datetime_obj)
+    return start_datetime, end_datetime
+    
     if not validate_datetime(from_datetime):
     if not validate_datetime(to_datetime):
 
