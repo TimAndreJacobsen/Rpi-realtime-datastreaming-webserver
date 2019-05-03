@@ -24,7 +24,7 @@ def show_realtime_status():
 def status():
     from_datetime, to_datetime = get_args()
     temperatures, humidities = get_records(from_datetime, to_datetime)
-    return render_template("room_status.html", temp=temperatures, hum=humidities)
+    return render_template("room_status.html", temp=temperatures, hum=humidities, temp_items=len(temperatures), hum_items=len(humidities))
 
 def get_records(from_datetime, to_datetime):
     conn, curs = db_connect()
