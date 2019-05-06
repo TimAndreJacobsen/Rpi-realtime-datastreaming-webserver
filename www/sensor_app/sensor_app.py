@@ -23,20 +23,19 @@ def show_realtime_status():
 @app.route("/status", methods=['GET'])
 def status():
     from_datetime, to_datetime = get_args()
-    temperatures, humidities, temp_hum = get_records(from_datetime, to_datetime)
     return render_template("room_status.html", temp=temperatures, hum=humidities, both=temp_hum, temp_items=len(temperatures), hum_items=len(humidities), both_items=len(temp_hum))
+    temp_hum = get_records(from_datetime, to_datetime)
 
 def get_records(from_datetime, to_datetime):
     conn, curs = db_connect()
-    curs.execute('SELECT * FROM temperatures WHERE rDatetime BETWEEN ? AND ?', (from_datetime, to_datetime))
-    temp_rows = curs.fetchall()
-    curs.execute('SELECT * FROM humidities WHERE rDatetime BETWEEN ? AND ?', (from_datetime, to_datetime))
-    humi_rows = curs.fetchall()
+#    curs.execute('SELECT * FROM temperatures WHERE rDatetime BETWEEN ? AND ?', (from_datetime, to_datetime))
+#    temp_rows = curs.fetchall()
+#    curs.execute('SELECT * FROM humidities WHERE rDatetime BETWEEN ? AND ?', (from_datetime, to_datetime))
+#    humi_rows = curs.fetchall()
     curs.execute('SELECT temperatures.rDatetime, temperatures.temp, humidities.humidity FROM temperatures JOIN humidities ON temperatures.rDatetime = humidities.rDatetime WHERE temperatures.rDatetime BETWEEN ? AND ?', (from_datetime, to_datetime))
-    both_rows = curs.fetchall()
-
+    temp_humid_rows_data = curs.fetchall()
     db_disconnect(conn)
-    return temp_rows, humi_rows, both_rows
+    return temp_humid_rows_data
 
 def get_args():
     # get args from url
