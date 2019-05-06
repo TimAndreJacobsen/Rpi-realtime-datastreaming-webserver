@@ -52,47 +52,6 @@
     <div class="container">
       <div class="row">
 
-        <div class="one-third column" style="margin-top: 5%">
-          <strong>Showing all records</strong>
-
-          <h2>Temperature</h2>
-            <table class="u-full-width">
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>&deg;C</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for row in temp %}
-                <tr>
-                  <td>{{row[0]}}</td>
-                  <td>{{'%0.2f'|format(row[2])}}</td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>  
-
-            <h2>Humidity</h2>
-            <table class="u-full-width">
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>%</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for row in hum %}
-                <tr>
-                  <td>{{row[0]}}</td>
-                  <td>{{'%0.2f'|format(row[2])}}</td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>  
-
-        </div>
-
       <!-- Google Charts -->
       <div class="two-thirds column" style="margin-top: 5%">
         <div class="row">                  
