@@ -19,13 +19,27 @@
   </head>
 
   <body>
-
     <div class="container">
+      <h2>Select data range</h2>
+      <div class="row">
+          <form id="datetime_range" action="/status" method="GET"> 
+              <div class="three columns">
+                <label for="from">From date</label>
+                <input class="u-full-width" id="datetimepicker_from" type="text" value="{{from_date}}" name="from">
+              </div>        
+              <div class="three columns">
+                <label for="to">To date</label>           
+                <input class="u-full-width" id="datetimepicker_to" type="text" value="{{to_date}}" name="to">
+              </div>           
+              <div class="two columns">           
+                <input class="button-primary" type="submit" value="Submit" style="position:relative; top: 28px" id="submit_button" />
+              </div>        
+          </form> 
+      </div>
+
       <div class="row">
         <div class="eleven columns">
-
-            <h2>Select data range</h2>
-            <strong>Timespan to view</strong>
+            <strong>Quick Select</strong>
             <form action="/status" id="range_select" name="range_select" method="GET">
               <div class="one column">
                 <input type="radio" name="range_h" value="12" id="radio_12"/>
@@ -44,7 +58,6 @@
                 <label for="radio_168">week</label>
               </div>
             </form>
-
         </div>
       </div>
     </div>
@@ -66,6 +79,7 @@
       </div>
 
     </div>
+  </div>
 
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -97,6 +111,7 @@
       curveType: 'function',
       width: 900,
       height: 500
+      //TODO: increase frequency of x-axis markings
     };
 
     var chart = new google.charts.Line(document.getElementById('chart_both'));
@@ -154,16 +169,18 @@
     var chart = new google.charts.Line(document.getElementById('chart_humid'));
     chart.draw(data, google.charts.Line.convertOptions(options));
   }
+</script>
+
 
 <link rel="stylesheet" type="text/css" href="/static/css/jquery.datetimepicker.css">
 <script src="/static/js/jquery.datetimepicker.full.min.js"></script>
 <script>
-  jQuery('#datetimepicker1').datetimepicker(
+  jQuery('#datetimepicker_from').datetimepicker(
     {
       format:'Y-m-d H:i',
       defaultDate:'{{from_date}}'
     });
-  jQuery('#datetimepicker2').datetimepicker({
+  jQuery('#datetimepicker_to').datetimepicker({
       format:'Y-m-d H:i',
       defaultDate:'{{to_date}}'
     });
