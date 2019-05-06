@@ -23,8 +23,8 @@ def show_realtime_status():
 @app.route("/status", methods=['GET'])
 def status():
     from_datetime, to_datetime = get_args()
-    return render_template("room_status.html", temp=temperatures, hum=humidities, both=temp_hum, temp_items=len(temperatures), hum_items=len(humidities), both_items=len(temp_hum))
     temp_hum = get_records(from_datetime, to_datetime)
+    return render_template( "room_status.html", temp_humid_data=temp_hum, from_date=from_datetime, to_date=to_datetime )
 
 def get_records(from_datetime, to_datetime):
     conn, curs = db_connect()
