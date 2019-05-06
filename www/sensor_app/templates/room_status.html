@@ -13,6 +13,8 @@
     <link rel="apple-touch-icon" sizes="180x180" href="../static/images/favicon_io/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="../static/images/favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="../static/images/favicon_io/favicon-16x16.png">
+    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <script type="text/javascript" src="../static/js/room_status.js" async></script>
   </head>
 
@@ -193,6 +195,24 @@
     var chart = new google.charts.Line(document.getElementById('chart_humid'));
     chart.draw(data, google.charts.Line.convertOptions(options));
   }
+
+<link rel="stylesheet" type="text/css" href="/static/css/jquery.datetimepicker.css">
+<script src="/static/js/jquery.datetimepicker.full.min.js"></script>
+<script>
+  jQuery('#datetimepicker1').datetimepicker(
+    {
+      format:'Y-m-d H:i',
+      defaultDate:'{{from_date}}'
+    });
+  jQuery('#datetimepicker2').datetimepicker({
+      format:'Y-m-d H:i',
+      defaultDate:'{{to_date}}'
+    });
+</script>
+
+
+
+  
 </script>
   </body>
 </html>
