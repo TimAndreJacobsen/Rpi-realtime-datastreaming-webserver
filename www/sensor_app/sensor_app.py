@@ -27,6 +27,12 @@ def status():
     temp_hum = get_records(from_datetime, to_datetime)
     return render_template( "room_status.html", temp_humid_data=temp_hum, from_date=from_datetime, to_date=to_datetime )
 
+@app.route('/video_feed')
+def video_feed():
+    """Video streaming route. Put this in the src attribute of an img tag."""
+    return Response(gen(Camera()),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
+
 def gen(camera):
     """Video streaming generator function."""
     while True:
