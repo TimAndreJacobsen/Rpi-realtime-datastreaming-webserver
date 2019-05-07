@@ -27,6 +27,13 @@ def status():
     temp_hum = get_records(from_datetime, to_datetime)
     return render_template( "room_status.html", temp_humid_data=temp_hum, from_date=from_datetime, to_date=to_datetime )
 
+def gen(camera):
+    """Video streaming generator function."""
+    while True:
+        frame = camera.get_frame()
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+
 def get_records(from_datetime, to_datetime):
     conn, curs = db_connect()
 #    curs.execute('SELECT * FROM temperatures WHERE rDatetime BETWEEN ? AND ?', (from_datetime, to_datetime))
