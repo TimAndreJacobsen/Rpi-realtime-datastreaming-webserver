@@ -4,6 +4,7 @@ import Adafruit_DHT
 import sqlite3
 import time
 import datetime
+from camera_pi import Camera
 
 app = Flask(__name__)
 app.debug = True
