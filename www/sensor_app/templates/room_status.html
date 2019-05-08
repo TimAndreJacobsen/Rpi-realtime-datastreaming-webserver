@@ -63,29 +63,25 @@
         <form method="get" action="/current">
           <button type="submit">View Live Data</button>
         </form>
-
       </div>
     </div>
 
     <div class="container">
       <div class="row">
-
-      <!-- Google Charts -->
-      <div class="two-thirds column" style="margin-top: 5%">
-        <div class="row">                  
-          <div class="row">
-            <div class="three columns">
-              <div id="chart_both"></div>
-              <div id="chart_temps"></div>
-              <div id="chart_humid"></div>
+        <!-- Google Charts -->
+        <div class="two-thirds column" style="margin-top: 5%">
+          <div class="row">                  
+            <div class="row">
+              <div class="three columns">
+                <div id="chart_temp_humid"></div>
+                <div id="chart_temps"></div>
+                <div id="chart_humid"></div>
+              </div>
             </div>
-          </div>
-        </div>     
+          </div>     
+        </div>
       </div>
-
     </div>
-  </div>
-
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
@@ -93,7 +89,6 @@
   google.charts.setOnLoadCallback(drawChart);
   google.charts.setOnLoadCallback(drawTempChart);
   google.charts.setOnLoadCallback(drawHumiChart);
-
   function drawChart() {
     var data = new google.visualization.DataTable();
     data.addColumn('datetime', 'Time');
@@ -106,7 +101,6 @@
         {{'%0.2f'|format(row[2])}}],
       {% endfor %}
     ]);
-
     var options = {
       chart: {
         title: 'Temperatures and Humidities',
@@ -116,10 +110,8 @@
       curveType: 'function',
       width: 900,
       height: 500
-      //TODO: increase frequency of x-axis markings
     };
-
-    var chart = new google.charts.Line(document.getElementById('chart_both'));
+    var chart = new google.charts.Line(document.getElementById('chart_temp_humid'));
     chart.draw(data, google.charts.Line.convertOptions(options));
   }
 
@@ -133,7 +125,6 @@
         {{'%0.2f'|format(row[1])}}],
       {% endfor %}
     ]);
-
     var options = {
       chart: {
         title: 'Temperatures',
@@ -144,7 +135,6 @@
       width: 900,
       height: 500
     };
-
     var chart = new google.charts.Line(document.getElementById('chart_temps'));
     chart.draw(data, google.charts.Line.convertOptions(options));
   }
@@ -159,7 +149,6 @@
         {{'%0.2f'|format(row[2])}}],
       {% endfor %}
     ]);
-
     var options = {
       chart: {
         title: 'Humidity',
@@ -170,12 +159,10 @@
       width: 900,
       height: 500
     };
-
     var chart = new google.charts.Line(document.getElementById('chart_humid'));
     chart.draw(data, google.charts.Line.convertOptions(options));
   }
 </script>
-
 
 <link rel="stylesheet" type="text/css" href="../static/css/jquery.datetimepicker.css">
 <script src="../static/js/jquery.datetimepicker.full.min.js"></script>
@@ -191,7 +178,6 @@
       defaultDate:'{{to_date}}'
     });
 </script>
-
 
   </body>
 </html>
