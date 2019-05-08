@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, Response
 import sys
 import Adafruit_DHT
 import sqlite3
