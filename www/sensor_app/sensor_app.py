@@ -1,10 +1,11 @@
 from flask import Flask, request, render_template, Response
+from importlib import import_module
 import sys
-import Adafruit_DHT
-import sqlite3
+import os
 import time
 import datetime
-import picamera
+import Adafruit_DHT
+import sqlite3
 from camera_pi import Camera
 
 app = Flask(__name__)
@@ -28,18 +29,18 @@ def status():
     temp_hum = get_records(from_datetime, to_datetime)
     return render_template( "room_status.html", temp_humid_data=temp_hum, from_date=from_datetime, to_date=to_datetime )
 
-@app.route('/video_feed')
-def video_feed():
-    """Video streaming route. Put this in the src attribute of an img tag."""
-    return Response(gen(Camera()),
-                    mimetype='multipart/x-mixed-replace; boundary=frame')
-
 def gen(camera):
     """Video streaming generator function."""
     while True:
         frame = camera.get_frame()
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+
+@app.route('/video_feed')
+def video_feed():
+    """Video streaming route. Put this in the src attribute of an img tag."""
+    return Response(gen(Camera()),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
 
 def get_records(from_datetime, to_datetime):
     conn, curs = db_connect()
