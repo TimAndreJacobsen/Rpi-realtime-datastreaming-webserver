@@ -20,5 +20,5 @@ if humidity is not None and temperature is not None:
     log_values("ceiling", temperature, humidity)
     # set up out of optimal range notification
 else:
-    log_values("ceiling", -998, -998)
+    log_values("ceiling", -1, -1)
     # set up error reporting
