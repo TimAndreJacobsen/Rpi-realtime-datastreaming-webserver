@@ -9,7 +9,6 @@ import sqlite3
 from camera_pi import Camera
 
 app = Flask(__name__)
-app.debug = True
 
 @app.route("/")
 def index():
