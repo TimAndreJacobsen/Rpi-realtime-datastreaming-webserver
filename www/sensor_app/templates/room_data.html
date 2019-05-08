@@ -15,9 +15,25 @@
 
 <body>
 
-    <h1>Room data - 30sec refresh</h1>
-    <p>Temperature is: {{ "{0:0.1f}".format(temp) }}*</p>
-    <p>Humidity is: {{ "{0:0.1f}".format(humidity) }}</p>   
+    <div class="container">
+        <h2>Live Status</h2>
+        <div class="row">
+            <p>
+                Temperature is: <strong>{{ "{0:0.1f}".format(temp) }}* </strong>
+                Humidity is: <strong>{{ "{0:0.1f}".format(humidity) }}% </strong>
+            </p>
+            <form method="get" action="/status">
+                <button type="submit">View Status</button>
+            </form>
+        </div>
+    </div>
 
+    <div class="container">
+            <div class="row">
+                <img src="{{ url_for('video_feed') }}" width="50%">
+            </div>
+        </div>
+
+    
 </body>
 </html>
