@@ -1,11 +1,8 @@
-from flask import Flask, request, render_template, Response
-from importlib import import_module
-import sys
-import os
+import sqlite3
 import time
 import datetime
+from flask import Flask, request, render_template, Response
 import Adafruit_DHT
-import sqlite3
 from camera_pi import Camera
 
 app = Flask(__name__)
@@ -26,10 +23,10 @@ def show_realtime_status():
 def status():
     from_datetime, to_datetime = get_args()
     temp_hum = get_records(from_datetime, to_datetime)
-    return render_template( "room_status.html", 
-                            temp_humid_data=temp_hum, 
-                            from_date=from_datetime, 
-                            to_date=to_datetime )
+    return render_template("room_status.html",
+                           temp_humid_data=temp_hum,
+                           from_date=from_datetime,
+                           to_date=to_datetime)
 
 def gen(camera):
     """Video streaming generator function."""
