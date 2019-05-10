@@ -43,10 +43,6 @@ def video_feed():
 
 def get_records(from_datetime, to_datetime):
     conn, curs = db_connect()
-#    curs.execute('SELECT * FROM temperatures WHERE rDatetime BETWEEN ? AND ?', (from_datetime, to_datetime))
-#    temp_rows = curs.fetchall()
-#    curs.execute('SELECT * FROM humidities WHERE rDatetime BETWEEN ? AND ?', (from_datetime, to_datetime))
-#    humi_rows = curs.fetchall()
     curs.execute('SELECT temperatures.rDatetime, temperatures.temp, humidities.humidity FROM temperatures JOIN humidities ON temperatures.rDatetime = humidities.rDatetime WHERE temperatures.rDatetime BETWEEN ? AND ?', (from_datetime, to_datetime))
     temp_humid_rows_data = curs.fetchall()
     db_disconnect(conn)
