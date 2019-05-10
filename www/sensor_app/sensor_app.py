@@ -26,7 +26,10 @@ def show_realtime_status():
 def status():
     from_datetime, to_datetime = get_args()
     temp_hum = get_records(from_datetime, to_datetime)
-    return render_template( "room_status.html", temp_humid_data=temp_hum, from_date=from_datetime, to_date=to_datetime )
+    return render_template( "room_status.html", 
+                            temp_humid_data=temp_hum, 
+                            from_date=from_datetime, 
+                            to_date=to_datetime )
 
 def gen(camera):
     """Video streaming generator function."""
@@ -49,11 +52,9 @@ def get_records(from_datetime, to_datetime):
     return temp_humid_rows_data
 
 def get_args():
-    # get args from url
     start_datetime_obj = request.args.get('from', time.strftime("%Y-%m-%d 00:00"))
     end_datetime_obj = request.args.get('to', time.strftime("%Y-%m-%d %H:%M"))
     radio_hours_form = request.args.get('range_h')
-
     start_datetime, end_datetime = validate_datetime_interval(start_datetime_obj, end_datetime_obj)
 
     range_hours_int = "nan"
@@ -69,7 +70,6 @@ def get_args():
 
     return start_datetime, end_datetime
 
-    
 def validate_datetime_interval(from_datetime, to_datetime):
     if not validate_datetime(from_datetime):
         from_datetime = time.strftime("%Y-%m-%d 00:00")
