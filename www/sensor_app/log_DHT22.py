@@ -17,8 +17,10 @@ def log_values(sensor_id, temperature, humidity):
 
 humidity, temperature = Adafruit_DHT.read_retry(Adafruit_DHT.AM2302, 4)
 if humidity is not None and temperature is not None:
-    log_values("ceiling", temperature, humidity)
-    # set up out of optimal range notification
+    if not humidity > 100 and not temperature > 100:
+        if not humidity < 0 and not temperature < 0:
+            log_values("ceiling", temperature, humidity)
+            # set up out of optimal range notification
 else:
     log_values("ceiling", -1, -1)
     # set up error reporting
