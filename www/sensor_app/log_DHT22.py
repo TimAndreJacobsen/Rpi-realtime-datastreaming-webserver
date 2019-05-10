@@ -2,7 +2,6 @@
 # Records from DHT_22 sensor and logs into SQLite3 database
 
 import sqlite3
-import sys
 import Adafruit_DHT
 
 def log_values(sensor_id, temperature, humidity):
@@ -11,7 +10,6 @@ def log_values(sensor_id, temperature, humidity):
 
     cursor.execute("""INSERT INTO temperatures values(datetime(CURRENT_TIMESTAMP, 'localtime'), (?), (?))""", (sensor_id, temperature))
     cursor.execute("""INSERT INTO humidities values(datetime(CURRENT_TIMESTAMP, 'localtime'), (?), (?))""", (sensor_id, humidity))
-    
     connection.commit()
     connection.close()
 
