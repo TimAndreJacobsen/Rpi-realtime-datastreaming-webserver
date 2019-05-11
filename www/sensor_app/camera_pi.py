@@ -10,6 +10,8 @@ class Camera(BaseCamera):
         with picamera.PiCamera() as camera:
             # let camera warm up
             time.sleep(2)
+            camera.resolution = (1280, 720)
+            camera.framerate = 30
 
             stream = io.BytesIO()
             for _ in camera.capture_continuous(stream, 'jpeg',
