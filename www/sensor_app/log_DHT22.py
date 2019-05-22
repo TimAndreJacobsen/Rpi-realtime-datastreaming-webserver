@@ -3,6 +3,7 @@
 
 import sqlite3
 import Adafruit_DHT
+import gevent
 
 def log_values(sensor_id, temperature, humidity):
     connection = sqlite3.connect('/var/www/sensor_app/sensor_app.db')
@@ -20,5 +21,8 @@ if humidity is not None and temperature is not None:
             log_values("ceiling", temperature, humidity)
             # set up out of optimal range notification
 else:
-    log_values("ceiling", -1, -1)
+    while humidity is None:
+        humidity, temperature = Adafruit_DHT.read_retry(Adafruit_DHT.AM2302, 4)
+        gevent.sleep(5)
+    log_values("ceiling", temperature, humidity)
     # set up error reporting
