@@ -17,7 +17,9 @@ def show_realtime_status():
     if humidity is not None and temp is not None:
         return render_template("room_data.html", temp=temp, humidity=humidity)
     else:
-        return render_template("sensor_error.html", msg="temp/humid is None")
+        return render_template("room_data.html",
+                               temp='error - temp is none',
+                               humidity='error - humidity is none')
 
 @app.route("/status", methods=['GET'])
 def status():
