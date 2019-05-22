@@ -18,8 +18,8 @@ def show_realtime_status():
         return render_template("room_data.html", temp=temp, humidity=humidity)
     else:
         return render_template("room_data.html",
-                               temp='error - temp is none',
-                               humidity='error - humidity is none')
+                               temp=0,
+                               humidity=0)
 
 @app.route("/status", methods=['GET'])
 def status():
