@@ -7,8 +7,9 @@ import gevent
 import Adafruit_DHT
 import mailer
 
-
-last_time_called = None # initializing 
+# Setup and config
+ALERT_INTERVAL = 3600   # time between alert mails | 3600 = 1hour
+LAST_TIME_CALLED = None     # initializing var
 
 def log_values(sensor_id, temperature, humidity):
     connection = sqlite3.connect('/var/www/sensor_app/sensor_app.db')
@@ -18,23 +19,21 @@ def log_values(sensor_id, temperature, humidity):
     connection.commit()
     connection.close()
 
+def send_alert(temp, hum):
+    if LAST_TIME_CALLED is None or LAST_TIME_CALLED + ALERT_INTERVAL < time.time(): 
+        mailer.send(temp, hum)
+        LAST_TIME_CALLED = time.time()
 
-def send_alert():
-    if last_time_called is None or last_time_called + 3600 < time.time(): 
-        mailer.send(temperature, humidity)
-        last_time_called = time.time()
-
-humidity, temperature = Adafruit_DHT.read_retry(Adafruit_DHT.AM2302, 4)
-if humidity is not None and temperature is not None:
-    if not humidity > 100 and not temperature > 100:
-        if not humidity < 0 and not temperature < 0:
-            if temperature > 27 or temperature < 10:
-                send_alert()
-            log_values("ceiling", temperature, humidity)
-
+HUMIDITY, TEMPERATURE = Adafruit_DHT.read_retry(Adafruit_DHT.AM2302, 4)
+if HUMIDITY is not None and TEMPERATURE is not None:
+    if not HUMIDITY > 100 and not TEMPERATURE > 100:
+        if not HUMIDITY < 0 and not TEMPERATURE < 0:
+            if TEMPERATURE > 27 or TEMPERATURE < 10:
+                send_alert(TEMPERATURE, HUMIDITY)
+            log_values("ceiling", TEMPERATURE, HUMIDITY)
 else:
-    while humidity is None:
-        humidity, temperature = Adafruit_DHT.read_retry(Adafruit_DHT.AM2302, 4)
+    while HUMIDITY is None:
+        HUMIDITY, TEMPERATURE = Adafruit_DHT.read_retry(Adafruit_DHT.AM2302, 4)
         gevent.sleep(5)
-    log_values("ceiling", temperature, humidity)
+    log_values("ceiling", TEMPERATURE, HUMIDITY)
     # set up error reporting
