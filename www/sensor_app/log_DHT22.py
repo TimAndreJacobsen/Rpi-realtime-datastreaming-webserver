@@ -9,7 +9,6 @@ import mailer
 
 # Setup and config
 ALERT_INTERVAL = 3600   # time between alert mails | 3600 = 1hour
-LAST_TIME_CALLED = None     # initializing var
 
 def log_values(sensor_id, temperature, humidity):
     connection = sqlite3.connect('/var/www/sensor_app/sensor_app.db')
@@ -20,9 +19,17 @@ def log_values(sensor_id, temperature, humidity):
     connection.close()
 
 def send_alert(temp, hum):
-    if LAST_TIME_CALLED is None or LAST_TIME_CALLED + ALERT_INTERVAL < time.time(): 
+    try:
+        last_time_called + 1
+    except NameError:
+        last_time_called = None
+
+    if last_time_called is None:
         mailer.send(temp, hum)
-        LAST_TIME_CALLED = time.time()
+        last_time_called = time.time()
+    if last_time_called + ALERT_INTERVAL < time.time():
+        mailer.send(temp, hum)
+        last_time_called = time.time()
 
 HUMIDITY, TEMPERATURE = Adafruit_DHT.read_retry(Adafruit_DHT.AM2302, 4)
 if HUMIDITY is not None and TEMPERATURE is not None:
