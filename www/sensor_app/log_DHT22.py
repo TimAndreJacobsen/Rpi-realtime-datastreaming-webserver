@@ -6,9 +6,7 @@ import time
 import gevent
 import Adafruit_DHT
 import mailer
-
-# Setup and config
-ALERT_INTERVAL = 3600   # time between alert mails | 3600 = 1hour
+import config
 
 def log_values(sensor_id, temperature, humidity):
     connection = sqlite3.connect('/var/www/sensor_app/sensor_app.db')
@@ -19,13 +17,9 @@ def log_values(sensor_id, temperature, humidity):
     connection.close()
 
 def send_alert(temp, hum):
-    try:
-        if (last_time_called + 1200) < time.time():
-            mailer.send(temp, hum, last_time_called)
-            last_time_called = time.time()
-    except UnboundLocalError:
-        last_time_called = time.time()
-        mailer.send(temp, hum, last_time_called)
+    if (config.CNF['last_time_called'] + 1200) < time.time():
+        mailer.send(temp, hum, config.CNF['last_time_called'])
+        config.CNF['last_time_called'] = time.time()
 
 HUMIDITY, TEMPERATURE = Adafruit_DHT.read_retry(Adafruit_DHT.AM2302, 4)
 if HUMIDITY is not None and TEMPERATURE is not None:
