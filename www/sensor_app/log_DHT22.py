@@ -19,7 +19,7 @@ def log_values(sensor_id, temperature, humidity):
 def send_alert(temp, hum):
     if (config.CNF['last_time_called'] + 1200) < time.time():
         mailer.send(temp, hum, config.CNF['last_time_called'])
-        config.CNF['last_time_called'] = time.time()
+        config.set_time()
 
 HUMIDITY, TEMPERATURE = Adafruit_DHT.read_retry(Adafruit_DHT.AM2302, 4)
 if HUMIDITY is not None and TEMPERATURE is not None:
