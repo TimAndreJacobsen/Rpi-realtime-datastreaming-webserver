@@ -3,6 +3,7 @@ import os
 from email.message import EmailMessage
 from email.headerregistry import Address
 import time
+import config
 
 mail_password = os.environ.get('RPI_MAIL_GOOGLE_PASS')
 mail_user = os.environ.get('MY_MAIL_ADR')
@@ -26,7 +27,11 @@ def send(temp, humid, last_time):
         <p>elapsed time since last alert {:0.0f} minutes</p>
       </body>
     </html>
-    """.format(temp, humid, last_time, time.time(), (time.time() - last_time)), subtype='html')
+    """.format(temp, humid,
+               config.CNF['last_time_called'],
+               time.time(),
+               (time.time() - config.CNF['last_time_called'])),
+               subtype='html')
 
     with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
         smtp.ehlo()
