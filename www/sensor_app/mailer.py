@@ -9,15 +9,20 @@ mail_receiver = os.environ.get('MAIL_ADR')
 
 def send(temp, humid):
     msg = EmailMessage()
-    msg['Subject'] = "Ayons asperges pour le déjeuner"
+    msg['Subject'] = "Automated temperature alert"
     msg['From'] = Address("RPI-server", "humitemp", mail_user)
     msg['To'] = (mail_receiver)
     msg.set_content("""\
-    This is an automated alert service.
-    the current temperature is out of optimal range.
-    temperature is {}, optimally you want to stay under 26c
-    humidity is {}, higher temps benefit from higher humidity
-    """.format(temp, humid))
+    <html>
+      <head></head>
+      <body>
+        <p>This is an automated alert service.</p>
+        <p>the current temperature is out of optimal range.</p>
+        <p>temperature is {}, optimally you want to stay under 26c<p/>
+        <p>humidity is {}, higher temps benefit from higher humidity<p/>
+      </body>
+    </html>
+    """.format(temp, humid), subtype='html')
 
     with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
         smtp.ehlo()
