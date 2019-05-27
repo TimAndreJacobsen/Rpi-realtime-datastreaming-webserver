@@ -20,14 +20,10 @@ def log_values(sensor_id, temperature, humidity):
 
 def send_alert(temp, hum):
     try:
-        last_time_called + 1        # check if var is initialized by performing an operation with it
-    except NameError:               # if the operation fails, it's not assigned
-        last_time_called = None
-
-    if last_time_called is None:
-        last_time_called = time.time()
-        mailer.send(temp, hum, last_time_called)
-    if (last_time_called + ALERT_INTERVAL) < time.time():
+        if (last_time_called + 1200) < time.time():
+            mailer.send(temp, hum, last_time_called)
+            last_time_called = time.time()
+    except UnboundLocalError:
         last_time_called = time.time()
         mailer.send(temp, hum, last_time_called)
 
@@ -35,9 +31,9 @@ HUMIDITY, TEMPERATURE = Adafruit_DHT.read_retry(Adafruit_DHT.AM2302, 4)
 if HUMIDITY is not None and TEMPERATURE is not None:
     if not HUMIDITY > 100 and not TEMPERATURE > 100:
         if not HUMIDITY < 0 and not TEMPERATURE < 0:
+            log_values("ceiling", TEMPERATURE, HUMIDITY)
             if TEMPERATURE > 27 or TEMPERATURE < 10:
                 send_alert(TEMPERATURE, HUMIDITY)
-            log_values("ceiling", TEMPERATURE, HUMIDITY)
 else:
     while HUMIDITY is None:
         HUMIDITY, TEMPERATURE = Adafruit_DHT.read_retry(Adafruit_DHT.AM2302, 4)
