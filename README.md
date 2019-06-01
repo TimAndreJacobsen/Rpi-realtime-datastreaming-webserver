@@ -22,6 +22,7 @@ The server also has a camera attached and upon receiving a request, it will star
 
 ## API's
 - Google Charts
+- JQuery for datetime widget
 
 ## Hardware
 - Raspberry Pi 3b +
