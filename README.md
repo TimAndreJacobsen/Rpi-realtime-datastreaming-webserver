@@ -3,7 +3,7 @@ Raspberry Pi server collecting data from a [DHT22 sensor](https://learn.adafruit
 
 ### How it works
 The raspberry pi runs a python script regularly polling the sensor for information. This information is inserted into a SQLite database. When a connection is established the Flask server sends a query to the database. If no specific time period is requested, Flask will use a predetermined default. This is sent through a query string in the URL. There are also a number of interface options for quickly selecting a time period.
-click [here]() for a demo.
+click [here](https://github.com/TimAndreJacobsen/Rpi-streaming-webserver#demo-of-functionality) for a demo.
 
 The server also has a camera attached and upon receiving a request, it will start up the camera and create a video feed using motion-jpeg. This raised issues of blocking. After trying both multithreading and coroutines I landed on using coroutines for it's superior performance. The Gevent event loop solved the blocking issues and allowed to have up to 5 viewers at the same time without any slowdown. click [here](https://github.com/TimAndreJacobsen/Rpi-streaming-webserver/blob/master/assets/concurrency.gif) for a demo of concurrency.
 
@@ -29,4 +29,4 @@ The server also has a camera attached and upon receiving a request, it will star
 - Raspberry Pi Camera Module v2
 
 ## Demo of functionality
-![]()
+![](https://github.com/TimAndreJacobsen/Rpi-streaming-webserver/blob/master/assets/demo.gif)
