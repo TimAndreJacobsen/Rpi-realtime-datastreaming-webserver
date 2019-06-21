@@ -16,8 +16,13 @@ def index():
 @app.route("/current")
 def show_realtime_status():
     humidity, temp = Adafruit_DHT.read_retry(Adafruit_DHT.AM2302, 4)
+    from_datetime = (datetime.datetime.now() -
+                     datetime.timedelta(hours=24)).strftime("%Y-%m-%d %H:%M")
+    to_datetime = time.strftime("%Y-%m-%d %H:%M")
+    temp_hum = get_records(from_datetime, to_datetime)
+
     if humidity is not None and temp is not None:
-        return render_template("room_data.html", temp=temp, humidity=humidity)
+        return render_template("room_data.html", temp=temp, humidity=humidity, temp_humid_data=temp_hum)
     else:
         return render_template("room_data.html",
                                temp=0,
