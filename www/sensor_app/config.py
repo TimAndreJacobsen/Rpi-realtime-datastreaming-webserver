@@ -6,5 +6,6 @@ CNF = {
     'last_time_called': 0
 }
 
+
 def set_time():
     CNF['last_time_called'] = time.time()
