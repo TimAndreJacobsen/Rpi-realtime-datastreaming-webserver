@@ -57,6 +57,10 @@ body {
   box-sizing: border-box;
 }
 
+.historic-btn:hover {
+  background-color: rgb(65, 65, 65);
+}
+
 .video-feed {
   width: auto;
   height: auto;
