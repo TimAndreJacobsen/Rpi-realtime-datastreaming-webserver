@@ -13,6 +13,7 @@ class CameraEvent(object):
     """An Event-like class that signals all active clients when a new frame is
     available.
     """
+
     def __init__(self):
         self.events = {}
 
@@ -93,7 +94,8 @@ class BaseCamera(object):
         for frame in frames_iterator:
             BaseCamera.frame = frame
             BaseCamera.event.set()  # send signal to clients
-            time.sleep(0) # sleep(0) here allows for coroutines to swap off this thread
+            # sleep(0) here allows for coroutines to swap off this thread
+            time.sleep(0)
 
             # if there hasn't been any clients asking for frames in
             # the last 10 seconds then stop the thread
