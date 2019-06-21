@@ -7,9 +7,11 @@ from camera_pi import Camera
 
 app = Flask(__name__)
 
+
 @app.route("/")
 def index():
     return status()
+
 
 @app.route("/current")
 def show_realtime_status():
@@ -21,6 +23,7 @@ def show_realtime_status():
                                temp=0,
                                humidity=0)
 
+
 @app.route("/status", methods=['GET'])
 def status():
     from_datetime, to_datetime = get_args()
@@ -30,6 +33,7 @@ def status():
                            from_date=from_datetime,
                            to_date=to_datetime)
 
+
 def gen(camera):
     """Video streaming generator function."""
     while True:
@@ -37,11 +41,13 @@ def gen(camera):
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
+
 @app.route('/video_feed')
 def video_feed():
     """Video streaming route. Put this in the src attribute of an img tag."""
     return Response(gen(Camera()),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
+
 
 def get_records(from_datetime, to_datetime):
     conn, curs = db_connect()
@@ -50,11 +56,14 @@ def get_records(from_datetime, to_datetime):
     db_disconnect(conn)
     return temp_humid_rows_data
 
+
 def get_args():
-    start_datetime_obj = request.args.get('from', time.strftime("%Y-%m-%d 00:00"))
+    start_datetime_obj = request.args.get(
+        'from', time.strftime("%Y-%m-%d 00:00"))
     end_datetime_obj = request.args.get('to', time.strftime("%Y-%m-%d %H:%M"))
     radio_hours_form = request.args.get('range_h')
-    start_datetime, end_datetime = validate_datetime_interval(start_datetime_obj, end_datetime_obj)
+    start_datetime, end_datetime = validate_datetime_interval(
+        start_datetime_obj, end_datetime_obj)
 
     range_hours_int = "nan"
     try:
@@ -69,12 +78,14 @@ def get_args():
 
     return start_datetime, end_datetime
 
+
 def validate_datetime_interval(from_datetime, to_datetime):
     if not validate_datetime(from_datetime):
         from_datetime = time.strftime("%Y-%m-%d 00:00")
     if not validate_datetime(to_datetime):
         to_datetime = time.strftime("%Y-%m-%d %H:%M")
     return from_datetime, to_datetime
+
 
 def validate_datetime(datetime_obj):
     try:
@@ -83,13 +94,16 @@ def validate_datetime(datetime_obj):
     except ValueError:
         return False
 
+
 def db_connect():
     connection = sqlite3.connect('/var/www/sensor_app/sensor_app.db')
     cursor = connection.cursor()
     return connection, cursor
 
+
 def db_disconnect(conn):
     conn.close()
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8080)
