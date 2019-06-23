@@ -29,11 +29,11 @@
     <div class="readings-container">
       <div class="readings">
         Temperature:
-        <strong>{{ "{0:0.1f}".format(temp) }}* </strong>
+        <div class="reading-value"><strong>{{ "{0:0.1f}".format(temp) }}* </strong></div>
       </div>
       <div class="readings">
         Humidity:
-        <strong>{{ "{0:0.1f}".format(humidity) }}% </strong>
+        <div class="reading-value"><strong>{{ "{0:0.1f}".format(humidity) }}% </strong></div>
       </div>
       <div class="button-container">
         <a href="/status">
